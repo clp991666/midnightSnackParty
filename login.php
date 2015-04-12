@@ -29,11 +29,7 @@ if (isset($_SESSION["SID"]))
 
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-          <li class="active"><a href="dashboard.php">Dashboard</a></li>
-          <li><a href="#">Your Party</a></li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-          <li><a href="signOut.php">Sign Out</a></li>
+          <li><a href="dashboard.php">Dashboard</a></li>
         </ul>
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
@@ -42,6 +38,8 @@ if (isset($_SESSION["SID"]))
     <div class="row">
       <?php
       if ($_GET["login"]=='fail') echo '<div class="alert alert-danger" role="alert">Student ID or password is incorrect! </div>';
+      if ($_GET["login"]=='required') echo '<div class="alert alert-warning" role="alert">Please login into the system </div>';
+      if ($_GET["register"]=='fail') echo '<div class="alert alert-danger" role="alert">Registration cannot be completed. Please contact usby sending email to help@midnightsnack.com</div>';
       ?>
       <div class="jumbotron">
        <h1>Midnight Snack Party </h1>

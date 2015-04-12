@@ -20,7 +20,7 @@ header( "Location: http://localhost/comp3121Project/login.php?login=required" );
   </script>
 
 </head>
-<body onload=loadPartyList()>
+<body onload=loadMyPartyList()>
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -37,8 +37,8 @@ header( "Location: http://localhost/comp3121Project/login.php?login=required" );
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Dashboard</a></li>
-        <li><a href="myParty.php">My Party</a></li>
+        <li><a href="dashboard.php">Dashboard</a></li>
+        <li class="active"><a href="#">My Party</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="signOut.php">Sign Out</a></li>
@@ -50,24 +50,9 @@ header( "Location: http://localhost/comp3121Project/login.php?login=required" );
     <div class="row">
 
       <div class="jumbotron">
-       <h1>Common Room</h1>
-       <p>Find your restaurant and snackmates here!!</p>
+       <h1>My party</h1>
+       <p>All your joined party is here!!</p>
      </div>
-     <div class="form-inline">
-      <div class="form-group">
-        <label for="inputTime">Time</label>
-        <input type="text" class="form-control" id="inputTime" placeholder="10">min
-      </div>
-      <div class="form-group">
-        <label for="inputRes">Restaurant</label>
-        <input type="text" class="form-control" id="inputRes" placeholder="M記">
-      </div>
-      <div class="form-group">
-        <label for="inputRes">Goal $</label>
-        <input type="text" class="form-control" id="inputGoal" placeholder="70">
-      </div>
-      <button onclick=newParty() href=# class="btn btn-primary">Add</button>
-    </form>
     <table class="table">
      <thead><tr><th>Time</th><th>Restuarant</th><th>Goal</th><th></th></tr></thead>
      <tbody>

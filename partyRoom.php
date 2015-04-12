@@ -1,7 +1,7 @@
 <?php 
 session_start();
 if (!isset($_SESSION["SID"]))
-header( "Location: http://localhost/comp3121Project/login.php" );
+header( "Location: http://localhost/comp3121Project/login.php?login=required" );
 ?>
 <html>
 <head>
@@ -15,6 +15,10 @@ header( "Location: http://localhost/comp3121Project/login.php" );
   <link rel="stylesheet" type="text/css" href="css/jquery.countdown.css"> 
   <script type="text/javascript" src="js/jquery.plugin.min.js"></script> 
   <script type="text/javascript" src="js/jquery.countdown.js"></script>
+  <script type="text/javascript">
+  var sid=<?php echo "'".$_SESSION["SID"]."'"; echo "\n";?>
+  var ownerId;
+  </script>
 </head>
 <body onload="init_for_partyRoom()">
 <nav class="navbar navbar-default">
@@ -34,7 +38,7 @@ header( "Location: http://localhost/comp3121Project/login.php" );
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li><a href="dashboard.php">Dashboard</a></li>
-        <li><a href="#">Your Party</a></li>
+        <li><a href="myParty.php">My Party</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="signOut.php">Sign Out</a></li>
