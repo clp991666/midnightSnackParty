@@ -1,7 +1,8 @@
 <?php
 error_reporting(0);
+mysql_query("SET NAMES UTF8");
 require_once 'dbconfig.php';
-$sql = "select `party`.`pid`, `time`, `restaurant`, `current`, `target` from `party`";
+$sql = "select `party`.`pid`, `time`, `restaurant`, `current`, `target` from `party` where `time`>now()";
 $result=mysql_query($sql);
 $json = '[';
 if (mysql_num_rows($result)>0){

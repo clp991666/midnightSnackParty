@@ -1,5 +1,6 @@
 <?php
 error_reporting(0);
+mysql_query("SET NAMES UTF8");
 require_once 'dbconfig.php';
 $sql = "SELECT * FROM `request`,`user` WHERE `request`.`sid` = `user`.`sid` and `pid`=".$_GET["pid"];
 $result=mysql_query($sql);
