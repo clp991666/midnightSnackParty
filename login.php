@@ -1,7 +1,8 @@
 <?php
 session_start();
+require_once 'server_setting.php';
 if (isset($_SESSION["SID"]))
-  header( "Location: http://localhost/comp3121Project/dashboard.php" );
+  header( "Location: ".$server_root."dashboard.php" );
 ?>
 <html>
 <head>

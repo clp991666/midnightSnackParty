@@ -1,5 +1,6 @@
 <?php
 session_start();
 session_destroy();
-header( "Location: http://localhost/comp3121Project/login.php" );
+require_once 'server_setting.php';
+header( "Location: ".$server_root."login.php" );
 ?>
