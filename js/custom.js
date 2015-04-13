@@ -42,7 +42,7 @@ function loadMyPartyActiveList(){
       var partyList = JSON.parse(text);
       for (i=0;i<partyList.length;i++){
         if (partyList[i].ownerId==sid)
-          $("#active").append('<tr><td class="time">'+partyList[i].time+'</td><td>'+partyList[i].restaurant+'</td><td>'+partyList[i].current+'/'+partyList[i].target+'</td><td><a class="btn btn-primary" href="partyRoom.php?pid='+partyList[i].pid+'" role="button">Go to Party</a>  <a class="btn btn-danger" onclick=cancelParty("'+partyList[i].pid+'") role="button">Remove</a></td></tr>');
+          $("#active").append('<tr><td class="time">'+partyList[i].time+'</td><td>'+partyList[i].restaurant+'</td><td>'+partyList[i].current+'/'+partyList[i].target+'</td><td><a class="btn btn-primary" href="partyRoom.php?pid='+partyList[i].pid+'" role="button">Go to Party</a>  <a class="btn btn-danger" onclick="cancelParty(\''+partyList[i].pid+'\', true)" role="button">Remove</a></td></tr>');
         else
           $("#active").append('<tr><td class="time">'+partyList[i].time+'</td><td>'+partyList[i].restaurant+'</td><td>'+partyList[i].current+'/'+partyList[i].target+'</td><td><a class="btn btn-primary" href="partyRoom.php?pid='+partyList[i].pid+'" role="button">Go to Party</a></td><td></td></tr>');
       }
@@ -65,7 +65,7 @@ function loadMyPartyOutdatedList(){
       var partyList = JSON.parse(text);
       for (i=0;i<partyList.length;i++){
         if (partyList[i].ownerId==sid)
-          $("#outdated").append('<tr><td class="time">'+partyList[i].time+'</td><td>'+partyList[i].restaurant+'</td><td>'+partyList[i].current+'/'+partyList[i].target+'</td><td><a class="btn btn-primary" href="partyRoom.php?pid='+partyList[i].pid+'" role="button">Go to Party</a>  <a class="btn btn-danger" onclick=cancelParty("'+partyList[i].pid+'") role="button">Remove</a></td></tr>');
+          $("#outdated").append('<tr><td class="time">'+partyList[i].time+'</td><td>'+partyList[i].restaurant+'</td><td>'+partyList[i].current+'/'+partyList[i].target+'</td><td><a class="btn btn-primary" href="partyRoom.php?pid='+partyList[i].pid+'" role="button">Go to Party</a>  <a class="btn btn-danger" onclick="cancelParty(\''+partyList[i].pid+'\', true)" role="button">Remove</a></td></tr>');
         else
           $("#outdated").append('<tr><td class="time">'+partyList[i].time+'</td><td>'+partyList[i].restaurant+'</td><td>'+partyList[i].current+'/'+partyList[i].target+'</td><td><a class="btn btn-primary" href="partyRoom.php?pid='+partyList[i].pid+'" role="button">Go to Party</a></td><td></td></tr>');
       }
