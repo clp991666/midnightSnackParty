@@ -215,7 +215,7 @@ function cancelParty(pid, myparty){
     xmlhttp3.onreadystatechange=function()
     {
       if (xmlhttp3.readyState==4 && xmlhttp3.status==200)
-        if (party)
+        if (myparty)
           loadMyPartyList();
         else
           loadPartyList();
