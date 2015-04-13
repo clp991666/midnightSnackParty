@@ -1,8 +1,8 @@
 var partyList;
-var ownerId="12345678d";
 var pid;
 
 function loadPartyList(){
+  $('.time').countdown('destroy');
   xmlhttp=new XMLHttpRequest();
   xmlhttp.onreadystatechange=function()
   {
@@ -12,7 +12,10 @@ function loadPartyList(){
       $("tbody").html("");
       var partyList = JSON.parse(text);
       for (i=0;i<partyList.length;i++){
-        $("tbody").append('<tr><td class="time">'+partyList[i].time+'</td><td>'+partyList[i].restaurant+'</td><td>'+partyList[i].current+'/'+partyList[i].target+'</td><td><a class="btn btn-primary" href="partyRoom.php?pid='+partyList[i].pid+'" role="button">Join</a></td></tr>')
+        if (partyList[i].ownerId==sid)
+          $("tbody").append('<tr><td class="time">'+partyList[i].time+'</td><td>'+partyList[i].restaurant+'</td><td>'+partyList[i].current+'/'+partyList[i].target+'</td><td><a class="btn btn-primary" href="partyRoom.php?pid='+partyList[i].pid+'" role="button">Join</a>  <a class="btn btn-danger" onclick=cancelParty("'+partyList[i].pid+'") role="button">Remove</a></td></tr>');
+        else
+          $("tbody").append('<tr><td class="time">'+partyList[i].time+'</td><td>'+partyList[i].restaurant+'</td><td>'+partyList[i].current+'/'+partyList[i].target+'</td><td><a class="btn btn-primary" href="partyRoom.php?pid='+partyList[i].pid+'" role="button">Join</a></td><td></td></tr>');
       }
       playTime();
     }
@@ -21,17 +24,39 @@ function loadPartyList(){
   xmlhttp.send();
 }
 
+function loadMyPartyList(){
+  $('.time').countdown('destroy');
+  xmlhttp=new XMLHttpRequest();
+  xmlhttp.onreadystatechange=function()
+  {
+    if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+      text=xmlhttp.responseText;
+      $("tbody").html("");
+      var partyList = JSON.parse(text);
+      for (i=0;i<partyList.length;i++){
+        if (partyList[i].ownerId==sid)
+          $("tbody").append('<tr><td class="time">'+partyList[i].time+'</td><td>'+partyList[i].restaurant+'</td><td>'+partyList[i].current+'/'+partyList[i].target+'</td><td><a class="btn btn-primary" href="partyRoom.php?pid='+partyList[i].pid+'" role="button">Go to Party</a>  <a class="btn btn-danger" onclick=cancelParty("'+partyList[i].pid+'") role="button">Remove</a></td></tr>');
+        else
+          $("tbody").append('<tr><td class="time">'+partyList[i].time+'</td><td>'+partyList[i].restaurant+'</td><td>'+partyList[i].current+'/'+partyList[i].target+'</td><td><a class="btn btn-primary" href="partyRoom.php?pid='+partyList[i].pid+'" role="button">Go to Party</a></td><td></td></tr>');
+      }
+      playTime();
+    }
+  }
+  xmlhttp.open("GET","getMyPartyList.php?sid="+sid,true);
+  xmlhttp.send();
+}
+
 function newParty(){
   var time=$("#inputTime").val();
   var res=$("#inputRes").val();
   var goal=$("#inputGoal").val();
-  $('.time').countdown('destroy');
   xmlhttp=new XMLHttpRequest();
   xmlhttp.onreadystatechange=function()
   {
     if (xmlhttp.readyState==4 && xmlhttp.status==200) loadPartyList();
   }
-  url="newParty.php?time="+time+"&res="+res+"&goal="+goal+"&ownerId="+ownerId;
+  url="newParty.php?time="+time+"&res="+res+"&goal="+goal+"&ownerId="+sid;
   xmlhttp.open("GET",url,true);
   xmlhttp.send();
 }
@@ -72,7 +97,8 @@ function getPartyMember(pid){
       $("tbody").html("");
       var partyMember = JSON.parse(text);
       for (i=0;i<partyMember.length;i++){
-        $("tbody").append('<tr><td>'+partyMember[i].uname+'</td><td>'+partyMember[i].food+'</td><td>'+partyMember[i].amount+'</td><td><button class="btn btn-danger">Cancel</button></td></tr>');
+        if (partyMember[i].sid==sid) $("tbody").append('<tr><td>'+partyMember[i].uname+'</td><td>'+partyMember[i].food+'</td><td>'+partyMember[i].amount+'</td><td><button class="btn btn-danger" onclick="cancelFoodRequest('+partyMember[i].rid+','+partyMember[i].amount+')">Cancel</button></td></tr>');
+        else $("tbody").append('<tr><td>'+partyMember[i].uname+'</td><td>'+partyMember[i].food+'</td><td>'+partyMember[i].amount+'<td></td>');
         current=parseFloat(current)+parseFloat(partyMember[i].amount);
       }
       $('#current').text("current: "+current);
@@ -94,6 +120,7 @@ function getPartyDetails(pid){
       $('#time').html('Time: <span class="time">'+partyDetails[0].time+'</span>');
       $('#res').text('Restaurant: '+partyDetails[0].res);
       $('#goal').text('Goal: '+partyDetails[0].target);
+      $('#current').text('Current: '+partyDetails[0].current);
       ownerId = partyDetails[0].ownerId;
       playTime();
     }
@@ -113,7 +140,6 @@ function newFoodRequest(pid){
   }
   food=$('#inputFood').val();
   amount=$('#inputMoney').val();
-  sid="13456789d";
   url="newFoodRequest.php?pid="+pid+"&food="+food+"&amount="+amount+"&sid="+sid;
   xmlhttp2.open("GET",url,true);
   xmlhttp2.send();
@@ -122,29 +148,60 @@ function newFoodRequest(pid){
 function register(){
   event.stopPropagation()
   if ($('.register').css('display') == 'block') {
+    var inputSID=$('#inputSID').val();
+    var inputPassword=$('#inputPassword').val();
+    var inputName=$('#inputName').val();
+    var inputU=$('#inputU').val();
+    post('newUser.php',{inputSID:inputSID,inputPassword:inputPassword,inputName:inputName,inputU:inputU});
   } else $('.register').css('display', 'block');
 }
 
 function post(path, params, method) {
-    method = method || "post"; // Set method to post by default if not specified.
+  method = method || "post"; // Set method to post by default if not specified.
 
-    // The rest of this code assumes you are not using a library.
-    // It can be made less wordy if you use one.
-    var form = document.createElement("form");
-    form.setAttribute("method", method);
-    form.setAttribute("action", path);
+  // The rest of this code assumes you are not using a library.
+  // It can be made less wordy if you use one.
+  var form = document.createElement("form");
+  form.setAttribute("method", method);
+  form.setAttribute("action", path);
 
-    for(var key in params) {
-        if(params.hasOwnProperty(key)) {
-            var hiddenField = document.createElement("input");
-            hiddenField.setAttribute("type", "hidden");
-            hiddenField.setAttribute("name", key);
-            hiddenField.setAttribute("value", params[key]);
+  for(var key in params) {
+    if(params.hasOwnProperty(key)) {
+      var hiddenField = document.createElement("input");
+      hiddenField.setAttribute("type", "hidden");
+      hiddenField.setAttribute("name", key);
+      hiddenField.setAttribute("value", params[key]);
 
-            form.appendChild(hiddenField);
-         }
+      form.appendChild(hiddenField);
     }
+  }
 
-    document.body.appendChild(form);
-    form.submit();
+  document.body.appendChild(form);
+  form.submit();
+}
+
+function cancelParty(pid){
+  var cancel = confirm("Do you want to remove the party");
+  if (cancel == true) {
+    xmlhttp3=new XMLHttpRequest();
+    xmlhttp3.onreadystatechange=function()
+    {
+      if (xmlhttp3.readyState==4 && xmlhttp3.status==200) loadPartyList();
+    }
+    xmlhttp3.open("GET","cancelParty.php?pid="+pid,true);
+    xmlhttp3.send();
+  } 
+}
+
+function cancelFoodRequest(rid,amount){
+  var cancel = confirm("Do you want to remove the order");
+  if (cancel == true) {
+    xmlhttp4=new XMLHttpRequest();
+    xmlhttp4.onreadystatechange=function()
+    {
+      if (xmlhttp4.readyState==4 && xmlhttp4.status==200) getPartyMember(pid);
+    }
+    xmlhttp4.open("GET","cancelFoodRequest.php?rid="+rid+"&pid="+pid+"&amount="+amount,true);
+    xmlhttp4.send();
+  } 
 }
