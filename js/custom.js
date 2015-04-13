@@ -25,6 +25,12 @@ function loadPartyList(){
 }
 
 function loadMyPartyList(){
+  
+  loadMyPartyActiveList();
+  loadMyPartyOutdatedList();
+  
+}
+function loadMyPartyActiveList(){
   $('.time').countdown('destroy');
   xmlhttp=new XMLHttpRequest();
   xmlhttp.onreadystatechange=function()
@@ -32,19 +38,42 @@ function loadMyPartyList(){
     if (xmlhttp.readyState==4 && xmlhttp.status==200)
     {
       text=xmlhttp.responseText;
-      $("tbody").html("");
+      $("#active").html("");
       var partyList = JSON.parse(text);
       for (i=0;i<partyList.length;i++){
         if (partyList[i].ownerId==sid)
-          $("tbody").append('<tr><td class="time">'+partyList[i].time+'</td><td>'+partyList[i].restaurant+'</td><td>'+partyList[i].current+'/'+partyList[i].target+'</td><td><a class="btn btn-primary" href="partyRoom.php?pid='+partyList[i].pid+'" role="button">Go to Party</a>  <a class="btn btn-danger" onclick=cancelParty("'+partyList[i].pid+'") role="button">Remove</a></td></tr>');
+          $("#active").append('<tr><td class="time">'+partyList[i].time+'</td><td>'+partyList[i].restaurant+'</td><td>'+partyList[i].current+'/'+partyList[i].target+'</td><td><a class="btn btn-primary" href="partyRoom.php?pid='+partyList[i].pid+'" role="button">Go to Party</a>  <a class="btn btn-danger" onclick=cancelParty("'+partyList[i].pid+'") role="button">Remove</a></td></tr>');
         else
-          $("tbody").append('<tr><td class="time">'+partyList[i].time+'</td><td>'+partyList[i].restaurant+'</td><td>'+partyList[i].current+'/'+partyList[i].target+'</td><td><a class="btn btn-primary" href="partyRoom.php?pid='+partyList[i].pid+'" role="button">Go to Party</a></td><td></td></tr>');
+          $("#active").append('<tr><td class="time">'+partyList[i].time+'</td><td>'+partyList[i].restaurant+'</td><td>'+partyList[i].current+'/'+partyList[i].target+'</td><td><a class="btn btn-primary" href="partyRoom.php?pid='+partyList[i].pid+'" role="button">Go to Party</a></td><td></td></tr>');
       }
       playTime();
     }
   }
-  xmlhttp.open("GET","getMyPartyList.php?sid="+sid,true);
+  xmlhttp.open("GET","getMyPartyActiveList.php?sid="+sid,true);
   xmlhttp.send();
+}
+
+function loadMyPartyOutdatedList(){
+  $('.time').countdown('destroy');
+  xmlhttp5=new XMLHttpRequest();
+  xmlhttp5.onreadystatechange=function()
+  {
+    if (xmlhttp5.readyState==4 && xmlhttp5.status==200)
+    {
+      text=xmlhttp5.responseText;
+      $("#outdated").html("");
+      var partyList = JSON.parse(text);
+      for (i=0;i<partyList.length;i++){
+        if (partyList[i].ownerId==sid)
+          $("#outdated").append('<tr><td class="time">'+partyList[i].time+'</td><td>'+partyList[i].restaurant+'</td><td>'+partyList[i].current+'/'+partyList[i].target+'</td><td><a class="btn btn-primary" href="partyRoom.php?pid='+partyList[i].pid+'" role="button">Go to Party</a>  <a class="btn btn-danger" onclick=cancelParty("'+partyList[i].pid+'") role="button">Remove</a></td></tr>');
+        else
+          $("#outdated").append('<tr><td class="time">'+partyList[i].time+'</td><td>'+partyList[i].restaurant+'</td><td>'+partyList[i].current+'/'+partyList[i].target+'</td><td><a class="btn btn-primary" href="partyRoom.php?pid='+partyList[i].pid+'" role="button">Go to Party</a></td><td></td></tr>');
+      }
+      playTime();
+    }
+  }
+  xmlhttp5.open("GET","getMyPartyOutdatedList.php?sid="+sid,true);
+  xmlhttp5.send();
 }
 
 function newParty(){
@@ -63,7 +92,6 @@ function newParty(){
 function playTime(){
   $('.time').each(function(){
     date=new Date($(this).text());
-    console.log(date);
     $(this).countdown({until: date, format: 'MS',compact: true, description: ''});
   })
 }
