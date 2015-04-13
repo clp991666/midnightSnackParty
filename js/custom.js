@@ -208,13 +208,17 @@ function post(path, params, method) {
   form.submit();
 }
 
-function cancelParty(pid){
+function cancelParty(pid, myparty){
   var cancel = confirm("Do you want to remove the party");
   if (cancel == true) {
     xmlhttp3=new XMLHttpRequest();
     xmlhttp3.onreadystatechange=function()
     {
-      if (xmlhttp3.readyState==4 && xmlhttp3.status==200) loadPartyList();
+      if (xmlhttp3.readyState==4 && xmlhttp3.status==200)
+        if (party)
+          loadMyPartyList();
+        else
+          loadPartyList();
     }
     xmlhttp3.open("GET","cancelParty.php?pid="+pid,true);
     xmlhttp3.send();
