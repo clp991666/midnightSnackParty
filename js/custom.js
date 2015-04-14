@@ -91,8 +91,8 @@ function newParty(){
 }
 function playTime(){
   $('.time').each(function(){
-    date=new Date($(this).text());
-    $(this).countdown({until: date, format: 'MS',compact: true, description: ''});
+    date = new Date(parseInt($(this).text()) * 1000);
+    $(this).countdown({until: date, format: 'MS', compact: true, description: ''});
   })
 }
 function getUrlParameter(sParam)
