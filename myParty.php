@@ -1,8 +1,7 @@
 <?php 
 session_start();
-require_once 'server_setting.php';
 if (!isset($_SESSION["SID"]))
-  header( "Location: ".$server_root."login.php?login=required" );
+  header( "Location: login.php?login=required" );
 ?>
 <html>
 <head>
@@ -58,7 +57,7 @@ if (!isset($_SESSION["SID"]))
       <h3>Active</h3>
     </div>
     <table class="table">
-     <thead><tr><th>Time</th><th>Restuarant</th><th>Goal</th><th></th></tr></thead>
+     <thead><tr><th>Time</th><th>Restaurant</th><th>Goal</th><th></th></tr></thead>
      <tbody id="active">
      </tbody>
    </table>
@@ -66,7 +65,7 @@ if (!isset($_SESSION["SID"]))
       <h3>Past</h3>
     </div>
     <table class="table">
-     <thead><tr><th>Time</th><th>Restuarant</th><th>Goal</th><th></th></tr></thead>
+     <thead><tr><th>Time</th><th>Restaurant</th><th>Goal</th><th></th></tr></thead>
      <tbody id="outdated">
      </tbody>
    </table>

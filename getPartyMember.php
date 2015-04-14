@@ -1,15 +1,10 @@
 <?php
-error_reporting(0);
-mysql_query("SET NAMES UTF8");
 require_once 'dbconfig.php';
-$sql = "SELECT * FROM `request`,`user` WHERE `request`.`sid` = `user`.`sid` and `pid`=".$_GET["pid"];
-$result=mysql_query($sql);
-if (mysql_num_rows($result)>0){
-$json = '[';
-  while ($row = mysql_fetch_assoc($result)) 
-    $json=$json.'{"rid":"'.$row["rid"].'","sid":"'.$row["sid"].'","food":"'.$row["food"].'","amount":"'.$row["amount"].'","uname":"'.$row["uname"].'"},';
-$json=rtrim($json, ",");
-$json=$json.']';
-}
-echo $json;
+$sql = "SELECT * FROM `request`,`user` WHERE `request`.`sid` = `user`.`sid` and `pid`=" . $_GET["pid"];
+$result = $db->query($sql);
+$json = arra();
+while ($row = $result->fetch_assoc())
+    $json[] = $row;
+
+echo json_encode($json);
 ?>

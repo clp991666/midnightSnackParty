@@ -70,7 +70,7 @@ header( "Location: ".$server_root."login.php?login=required" );
       <button onclick=newParty() href=# class="btn btn-primary">Add</button>
     </form>
     <table class="table">
-     <thead><tr><th>Time</th><th>Restuarant</th><th>Goal</th><th></th></tr></thead>
+     <thead><tr><th>Time</th><th>Restaurant</th><th>Goal</th><th></th></tr></thead>
      <tbody>
      </tbody>
    </table>
