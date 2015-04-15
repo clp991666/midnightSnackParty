@@ -21,7 +21,7 @@ do {
     if (count($arr) > 0)
         break;
     else
-        sleep(3);
+        sleep(1);
 } while (time() < $timeout);
 
 header("Content-Type: application/json");
