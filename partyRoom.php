@@ -16,8 +16,7 @@ if (!isset($_SESSION["SID"]))
     <script type="text/javascript" src="js/jquery.plugin.min.js"></script>
     <script type="text/javascript" src="js/jquery.countdown.js"></script>
     <script type="text/javascript">
-        var sid =
-        <?php echo "'".$_SESSION["SID"]."'"; echo "\n";?>
+        var sid = <?php echo json_encode($_SESSION["SID"]) ?>;
         var ownerId;
     </script>
 </head>
