@@ -54,7 +54,9 @@ if (!isset($_SESSION["SID"]))
             <div class="jumbotron">
                 <h1>Party Room</h1>
                 <button type="button" class="btn btn-primary" style="float: right; width: inherit"
-                    onclick="open('chatroom.php'+ window.location.search, '', 'width=400, height=500')">Open Chat room</button>
+                        onclick="open('chatroom.php'+ window.location.search, '', 'width=400, height=500')">Open Chat
+                    room
+                </button>
             </div>
             <div class="form-inline">
                 <div class="form-group">
