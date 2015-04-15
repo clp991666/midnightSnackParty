@@ -3,7 +3,7 @@ require_once 'dbconfig.php';
 $sql = "SELECT *, unix_timestamp(`time`) as `t` FROM `party` WHERE `pid` = {$_GET["pid"]}";
 $result = $db->query($sql);
 $json = array();
-while ($row = $result->fetch_assoc($result))
+while ($row = $result->fetch_assoc())
     $json[] = array(
         "time"    => $row['t'],
         "res"     => $row["restaurant"],
