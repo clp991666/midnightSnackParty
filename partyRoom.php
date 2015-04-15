@@ -67,29 +67,29 @@ if (!isset($_SESSION["SID"]))
                     <label for="inputMoney">Amount</label>
                     $<input type="text" class="form-control" id="inputMoney" placeholder="50">
                 </div>
-                <button onclick=newFoodRequest(pid) href=# class="btn btn-primary">Add</button>
-                </form>
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Food</th>
-                        <th>Amount</th>
-                        <th></th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>Ben</td>
-                        <td>set meal 1</td>
-                        <td>20</td>
-                        <td>
-                            <button class="btn btn-danger" type="submit">Cancel</button>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                <button onclick="newFoodRequest(pid)" href="#" class="btn btn-primary">Add</button>
             </div>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Food</th>
+                    <th>Amount</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Ben</td>
+                    <td>set meal 1</td>
+                    <td>20</td>
+                    <td>
+                        <button class="btn btn-danger" type="submit">Cancel</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
+    </div>
 </body>
 </html>
