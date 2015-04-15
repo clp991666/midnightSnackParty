@@ -53,6 +53,10 @@ if (!isset($_SESSION["SID"]))
         <div class="row">
             <div class="jumbotron">
                 <h1>Party Room</h1>
+                <p id="time"></p>
+                <p id="res"></p>
+                <p id="goal"></p>
+                <p id="current"></p>
                 <button type="button" class="btn btn-primary" style="float: right; width: inherit"
                         onclick="open('chatroom.php'+ window.location.search, '', 'width=400, height=500')">Open Chat
                     room
@@ -72,21 +76,13 @@ if (!isset($_SESSION["SID"]))
             <table class="table">
                 <thead>
                 <tr>
-                    <th>Name</th>
+                    <th>User</th>
                     <th>Food</th>
                     <th>Amount</th>
                     <th></th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>Ben</td>
-                    <td>set meal 1</td>
-                    <td>20</td>
-                    <td>
-                        <button class="btn btn-danger" type="submit">Cancel</button>
-                    </td>
-                </tr>
                 </tbody>
             </table>
         </div>

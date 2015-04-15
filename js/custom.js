@@ -25,10 +25,10 @@ function loadPartyList(){
 }
 
 function loadMyPartyList(){
-  
+
   loadMyPartyActiveList();
   loadMyPartyOutdatedList();
-  
+
 }
 function loadMyPartyActiveList(){
   $('.time').countdown('destroy');
@@ -99,41 +99,41 @@ function getUrlParameter(sParam)
 {
   var sPageURL = window.location.search.substring(1);
   var sURLVariables = sPageURL.split('&');
-  for (var i = 0; i < sURLVariables.length; i++) 
+  for (var i = 0; i < sURLVariables.length; i++)
   {
     var sParameterName = sURLVariables[i].split('=');
-    if (sParameterName[0] == sParam) 
+    if (sParameterName[0] == sParam)
     {
       return sParameterName[1];
     }
   }
-}  
+}
 
 function init_for_partyRoom(){
   pid=getUrlParameter('pid');
   getPartyDetails(pid);
   getPartyMember(pid);
 }
-function getPartyMember(pid){
-  xmlhttp1=new XMLHttpRequest();
-  xmlhttp1.onreadystatechange=function()
-  {
-    if (xmlhttp1.readyState==4 && xmlhttp1.status==200)
-    {
-      text=xmlhttp1.responseText;
-      var current=0;
-      $("tbody").html("");
-      var partyMember = JSON.parse(text);
-      for (i=0;i<partyMember.length;i++){
-        if (partyMember[i].sid==sid) $("tbody").append('<tr><td>'+partyMember[i].uname+'</td><td>'+partyMember[i].food+'</td><td>'+partyMember[i].amount+'</td><td><button class="btn btn-danger" onclick="cancelFoodRequest('+partyMember[i].rid+','+partyMember[i].amount+')">Cancel</button></td></tr>');
-        else $("tbody").append('<tr><td>'+partyMember[i].uname+'</td><td>'+partyMember[i].food+'</td><td>'+partyMember[i].amount+'<td></td>');
-        current=parseFloat(current)+parseFloat(partyMember[i].amount);
-      }
-      $('#current').text("current: "+current);
+function getPartyMember(pid) {
+    xmlhttp1 = new XMLHttpRequest();
+    xmlhttp1.onreadystatechange = function () {
+        if (xmlhttp1.readyState == 4 && xmlhttp1.status == 200) {
+            text = xmlhttp1.responseText;
+            var current = 0;
+            $("tbody").html("");
+            var partyMember = JSON.parse(text);
+            for (i = 0; i < partyMember.length; i++) {
+                if (partyMember[i].sid == sid)
+                    $("tbody").append('<tr><td>' + partyMember[i].uname + '</td><td>' + partyMember[i].food + '</td><td>$' + partyMember[i].amount + '</td><td><button class="btn btn-danger" onclick="cancelFoodRequest(' + partyMember[i].rid + ',' + partyMember[i].amount + ')">Cancel</button></td></tr>');
+                else
+                    $("tbody").append('<tr><td>' + partyMember[i].uname + '</td><td>' + partyMember[i].food + '</td><td>$' + partyMember[i].amount + '<td></td>');
+                current += parseFloat(partyMember[i].amount);
+            }
+            $('#current').text("Current: $" + current);
+        }
     }
-  }
-  xmlhttp1.open("GET","getPartyMember.php?pid="+pid,true);
-  xmlhttp1.send();
+    xmlhttp1.open("GET", "getPartyMember.php?pid=" + pid, true);
+    xmlhttp1.send();
 }
 
 
@@ -147,8 +147,8 @@ function getPartyDetails(pid){
       var partyDetails = JSON.parse(text);
       $('#time').html('Time: <span class="time">'+partyDetails[0].time+'</span>');
       $('#res').text('Restaurant: '+partyDetails[0].res);
-      $('#goal').text('Goal: '+partyDetails[0].target);
-      $('#current').text('Current: '+partyDetails[0].current);
+      $('#goal').text('Goal: $'+partyDetails[0].target);
+      $('#current').text('Current: $'+partyDetails[0].current);
       ownerId = partyDetails[0].ownerId;
       playTime();
     }
@@ -222,7 +222,7 @@ function cancelParty(pid, myparty){
     }
     xmlhttp3.open("GET","cancelParty.php?pid="+pid,true);
     xmlhttp3.send();
-  } 
+  }
 }
 
 function cancelFoodRequest(rid,amount){
@@ -235,5 +235,5 @@ function cancelFoodRequest(rid,amount){
     }
     xmlhttp4.open("GET","cancelFoodRequest.php?rid="+rid+"&pid="+pid+"&amount="+amount,true);
     xmlhttp4.send();
-  } 
+  }
 }
