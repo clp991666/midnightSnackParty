@@ -1,7 +1,7 @@
 <?php
 require_once 'dbconfig.php';
 $timeout = isset($_GET['timeout']) ? intval($_GET['timeout']) : 0;
-$sleep = empty($_GET['sleep']) ? 3 : intval($_GET['sleep']);
+$sleep = isset($_GET['sleep']) ? intval($_GET['sleep']) : 3;
 $timeout += time();
 $from = empty($_GET['from']) ? '' : " and id > {$_GET['from']}";
 $pid = $_GET['pid'];
