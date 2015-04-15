@@ -43,7 +43,7 @@ $restaurant = $restaurant[0]
         function loadChat(from) {
             from = from ? from : lastid;
             xhr = $.ajax({
-                url: 'getChat.php?timeout=30&pid=' + pid + '&from=' + (from ? from : ''),
+                url: 'getChat.php?sleep=1&timeout=30&pid=' + pid + '&from=' + (from ? from : ''),
                 success: function (data) {
                     if (data.length > 0) {
                         addMessage(data);
