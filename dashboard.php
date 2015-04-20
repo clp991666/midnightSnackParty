@@ -1,8 +1,7 @@
 <?php 
 session_start();
-require_once 'server_setting.php';
 if (!isset($_SESSION["SID"]))
-header( "Location: ".$server_root."login.php?login=required" );
+header( "Location: login.php?login=required" );
 ?>
 <html>
 <head>
